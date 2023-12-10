@@ -1,7 +1,7 @@
 package racingcar.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
+import java.util.function.IntSupplier;
 
 public class Cars {
     private final List<Car> cars;
@@ -17,9 +17,9 @@ public class Cars {
         return new Cars(cars);
     }
 
-    public void moveCars() {
+    public void moveCars(IntSupplier intSupplier) {
         cars.forEach(car -> {
-            int condition = Randoms.pickNumberInRange(MoveCount.MIN_NUM, MoveCount.MAX_NUM);
+            int condition = intSupplier.getAsInt();
             car.moveByCondition(condition);
         });
     }

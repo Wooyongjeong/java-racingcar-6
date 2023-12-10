@@ -1,8 +1,11 @@
 package racingcar.service;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
+import java.util.function.IntSupplier;
 import racingcar.domain.Cars;
 import racingcar.domain.GameRound;
+import racingcar.domain.MoveCount;
 
 public class RacingCarService {
     private final InputService inputService;
@@ -30,7 +33,8 @@ public class RacingCarService {
     private void moveCarsUntilGameRoundOver(Cars cars, GameRound gameRound) {
         outputService.startGameRound();
         while (!gameRound.isEnd()) {
-            cars.moveCars();
+            IntSupplier randomSupplier = () -> Randoms.pickNumberInRange(MoveCount.MIN_NUM, MoveCount.MAX_NUM);
+            cars.moveCars(randomSupplier);
             List<String> moveResults = cars.getMoveResults();
             outputService.printMoveResults(moveResults);
             gameRound.roundOver();
